@@ -12,10 +12,11 @@ Color categoryColor = const Color(0xFF3B5874);
 Color iconColor = const Color(0xFF8E98A8);
 Color blackColor = const Color(0xFF06192D);
 Color whiteColor = const Color(0xFFE7EAEE);
+Color primaryTextColor = const Color(0xFF191C1F);
 
 // Typograpy
 TextStyle primaryTextStyle = GoogleFonts.poppins(
-  color: primaryColor,
+  color: primaryTextColor,
 );
 
 TextStyle whiteTextStyle = GoogleFonts.poppins(
