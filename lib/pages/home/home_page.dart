@@ -166,8 +166,34 @@ class HomePage extends StatelessWidget {
       );
     }
 
+    Widget headerButton() {
+      return ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 20,
+          ),
+          child: Text(
+            'Your Button Text',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
-      backgroundColor: blackColor,
+      backgroundColor: primaryColor,
       appBar: AppBar(
         title: Text(
           'Webcare Projects',
@@ -192,17 +218,187 @@ class HomePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 30,
-            vertical: 20,
-          ),
+          // padding: const EdgeInsets.symmetric(
+          //   horizontal: 30,
+          //   vertical: 20,
+          // ),
           child: Column(
             children: [
-              headerProfile(),
-              const SizedBox(
-                height: 25,
+              SizedBox(
+                height: 10,
               ),
-              headerStatus(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 20,
+                ),
+                child: headerProfile(),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 20,
+                ),
+                child: headerStatus(),
+              ),
+              Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: bgButtonHeader,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                      ),
+                    ),
+                    child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(1, (index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30,
+                              vertical: 15,
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                              ],
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: whiteColor,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                      ),
+                    ),
+                    child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      scrollDirection: Axis.vertical,
+                      child: Row(
+                        children: List.generate(1, (index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30,
+                              vertical: 15,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                                const SizedBox(
+                                  width: 25,
+                                ),
+                                headerButton(),
+                              ],
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
