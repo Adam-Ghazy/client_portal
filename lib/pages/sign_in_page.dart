@@ -1,5 +1,7 @@
+import 'package:client_portal/provider/auth_provider.dart';
 import 'package:client_portal/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -10,6 +12,10 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   bool isObscure = true;
+  bool isLoading = false;
+
+  TextEditingController usernameController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
 
   void _ObscureTogle() {
     setState(() {
@@ -19,6 +25,32 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    handleSignIn() async {
+      setState(() {
+        isLoading = true;
+      });
+
+      if (await authProvider.login(
+          username: usernameController.text,
+          password: passwordController.text)) {
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+              'Failed to login',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
+      setState(() {
+        isLoading = false;
+      });
+    }
+
     Widget headerContent() {
       return Column(
         children: [
@@ -70,6 +102,7 @@ class _SignInPageState extends State<SignInPage> {
             height: 10,
           ),
           TextFormField(
+            controller: usernameController,
             style: primaryTextStyle.copyWith(
               fontWeight: medium,
               fontSize: 16,
@@ -108,6 +141,7 @@ class _SignInPageState extends State<SignInPage> {
             height: 10,
           ),
           TextFormField(
+            controller: passwordController,
             style: primaryTextStyle.copyWith(
               fontWeight: medium,
               fontSize: 16,
@@ -156,8 +190,8 @@ class _SignInPageState extends State<SignInPage> {
                 boxShadow: const [
                   BoxShadow(
                       color: Colors.black26,
-                      offset: Offset(0, 4),
-                      blurRadius: 5.0)
+                      offset: Offset(0, 2),
+                      blurRadius: 4.0)
                 ],
                 gradient: const LinearGradient(
                   begin: Alignment(-1.0, 0.0),
@@ -171,7 +205,7 @@ class _SignInPageState extends State<SignInPage> {
                   ],
                   stops: [0.0402, 1.0],
                 ),
-                color: Colors.deepPurple.shade300,
+                color: isLoading ? Colors.transparent : primaryColor,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
                   color: whiteColor,
@@ -190,20 +224,44 @@ class _SignInPageState extends State<SignInPage> {
                 // elevation: MaterialStateProperty.all(3),
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
-              onPressed: () {},
+              onPressed: handleSignIn,
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 10,
                   bottom: 10,
                 ),
-                child: Text(
-                  "LOGIN",
-                  style: primaryTextStyle.copyWith(
-                    fontSize: 18,
-                    fontWeight: bold,
-                    color: Colors.white,
-                  ),
-                ),
+                child: isLoading
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: 10),
+                            height: 14,
+                            width: 14,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 4,
+                              // color: whiteColor,
+                            ),
+                          ),
+                          Text(
+                            'LOADING',
+                            style: primaryTextStyle.copyWith(
+                              fontSize: 18,
+                              fontWeight: bold,
+                              // color: whiteColor,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Text(
+                        "LOGIN",
+                        style: primaryTextStyle.copyWith(
+                          fontSize: 18,
+                          fontWeight: bold,
+                          color: Colors.white,
+                        ),
+                      ),
               ),
             ),
           ),

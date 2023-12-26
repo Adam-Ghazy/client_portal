@@ -14,7 +14,9 @@ Color blackColor = const Color(0xFF06192D);
 Color whiteColor = const Color(0xFFE7EAEE);
 Color primaryTextColor = const Color(0xFF191C1F);
 Color bgButtonHeader = const Color(0xFF015EE4);
+Color transparentColor = Colors.transparent;
 
+Color backgroundColor = const Color(0xFFE7EAEE);
 // Typograpy
 TextStyle primaryTextStyle = GoogleFonts.poppins(
   color: primaryTextColor,
