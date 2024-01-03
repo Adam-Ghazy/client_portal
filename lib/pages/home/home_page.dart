@@ -192,6 +192,49 @@ class HomePage extends StatelessWidget {
       );
     }
 
+    Widget progressClient() {
+      double screenWidth = MediaQuery.of(context).size.width;
+
+      return Padding(
+        padding: const EdgeInsets.all(10),
+        child: Container(
+          width: screenWidth -
+              20, // Lebar container disesuaikan dengan lebar layar
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            border: Border.all(
+              color: Colors.black,
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.all(10.10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Project: Test 1',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                LinearProgressIndicator(
+                    value: 1.0), // Ubah nilai progres sesuai kebutuhan
+                SizedBox(height: 10.0),
+                Text('Progress: 100%'),
+                SizedBox(height: 10.0),
+                Text('Estimated Time: 100'),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
@@ -295,101 +338,19 @@ class HomePage extends StatelessWidget {
                         children: List.generate(1, (index) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 30,
                               vertical: 15,
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
+                                Column(
+                                  children: [
+                                    progressClient(),
+                                    progressClient(),
+                                    progressClient(),
+                                    progressClient(),
+                                  ],
                                 ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                headerButton(),
                               ],
                             ),
                           );
