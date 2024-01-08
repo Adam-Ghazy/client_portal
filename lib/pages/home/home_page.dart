@@ -1,8 +1,24 @@
 import 'package:client_portal/theme.dart';
+import 'package:client_portal/widget/filter_progress_card.dart';
+import 'package:client_portal/widget/project_card.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String selectedFilter = "All";
+
+  void _onCategoryCardTap(String select) {
+    setState(() {
+      selectedFilter = select;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -192,48 +208,10 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    Widget progressClient() {
-      double screenWidth = MediaQuery.of(context).size.width;
+    // Widget progressClient() {
+    //   double screenWidth = MediaQuery.of(context).size.width;
 
-      return Padding(
-        padding: const EdgeInsets.all(10),
-        child: Container(
-          width: screenWidth -
-              20, // Lebar container disesuaikan dengan lebar layar
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            border: Border.all(
-              color: Colors.black,
-              width: 2.0,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.all(10.10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Project: Test 1',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 10.0),
-                LinearProgressIndicator(
-                    value: 1.0), // Ubah nilai progres sesuai kebutuhan
-                SizedBox(height: 10.0),
-                Text('Progress: 100%'),
-                SizedBox(height: 10.0),
-                Text('Estimated Time: 100'),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
+    // }
 
     return Scaffold(
       backgroundColor: primaryColor,
@@ -307,15 +285,46 @@ class HomePage extends StatelessWidget {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
+                                FilterProgressCard(
+                                  selected: selectedFilter == "All",
+                                  lable: "All (3)",
+                                  onTap: (isSelected) {
+                                    setState(() {
+                                      selectedFilter = "All";
+                                    });
+                                    _onCategoryCardTap("All");
+                                  },
                                 ),
-                                headerButton(),
-                                const SizedBox(
-                                  width: 25,
+                                FilterProgressCard(
+                                  selected: selectedFilter == "On Going",
+                                  lable: "On Going",
+                                  onTap: (isSelected) {
+                                    setState(() {
+                                      selectedFilter = "On Going";
+                                    });
+                                    _onCategoryCardTap("On Going");
+                                  },
                                 ),
-                                headerButton(),
+                                FilterProgressCard(
+                                  selected: selectedFilter == "Completed",
+                                  lable: "Completed",
+                                  onTap: (isSelected) {
+                                    setState(() {
+                                      selectedFilter = "Completed";
+                                    });
+                                    _onCategoryCardTap("Completed");
+                                  },
+                                ),
+                                FilterProgressCard(
+                                  selected: selectedFilter == "Revision",
+                                  lable: "Revision",
+                                  onTap: (isSelected) {
+                                    setState(() {
+                                      selectedFilter = "Revision";
+                                    });
+                                    _onCategoryCardTap("Revision");
+                                  },
+                                ),
                               ],
                             ),
                           );
@@ -345,10 +354,15 @@ class HomePage extends StatelessWidget {
                               children: [
                                 Column(
                                   children: [
-                                    progressClient(),
-                                    progressClient(),
-                                    progressClient(),
-                                    progressClient(),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, '/project');
+                                      },
+                                      child: ProjectCard(),
+                                    ),
+                                    ProjectCard(),
+                                    ProjectCard(),
                                   ],
                                 ),
                               ],

@@ -1,7 +1,9 @@
 import 'package:client_portal/pages/home/home_page.dart';
 import 'package:client_portal/pages/home/navbar_main.dart';
+import 'package:client_portal/pages/home/project_page.dart';
 import 'package:client_portal/pages/sign_in_page.dart';
 import 'package:client_portal/provider/auth_provider.dart';
+import 'package:client_portal/widget/project_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
         routes: {
           // '/': (context) => NavbarMain(),
           '/home': (context) => NavbarMain(),
+          '/project': (context) => ProjectPage(),
         },
       ),
     );
