@@ -99,86 +99,90 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget headerStatus() {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "20",
-                style: TextStyle(
-                  color: whiteColor,
-                  fontSize: 24,
-                  fontWeight: semibold,
+      return IntrinsicHeight(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "20",
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontSize: 24,
+                    fontWeight: semibold,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                "Project",
-                style: TextStyle(
-                  color: whiteColor,
-                  fontSize: 16,
-                  fontWeight: regular,
+                const SizedBox(
+                  height: 5,
                 ),
-              ),
-            ],
-          ),
-          VerticalDivider(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "461",
-                style: TextStyle(
-                  color: whiteColor,
-                  fontSize: 24,
-                  fontWeight: semibold,
+                Text(
+                  "Project",
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontSize: 16,
+                    fontWeight: regular,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                "FOLLOWING",
-                style: TextStyle(
-                  color: whiteColor,
-                  fontSize: 16,
-                  fontWeight: regular,
+              ],
+            ),
+            VerticalDivider(
+              color: whiteColor,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "461",
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontSize: 24,
+                    fontWeight: semibold,
+                  ),
                 ),
-              )
-            ],
-          ),
-          // SizedBox(
-          //   width: 20,
-          // ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "348",
-                style: TextStyle(
-                  color: whiteColor,
-                  fontSize: 24,
-                  fontWeight: semibold,
+                const SizedBox(
+                  height: 5,
                 ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                "FOLLOWERS",
-                style: TextStyle(
-                  color: whiteColor,
-                  fontSize: 16,
-                  fontWeight: regular,
+                Text(
+                  "FOLLOWING",
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontSize: 16,
+                    fontWeight: regular,
+                  ),
+                )
+              ],
+            ),
+            // SizedBox(
+            //   width: 20,
+            // ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "348",
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontSize: 24,
+                    fontWeight: semibold,
+                  ),
                 ),
-              )
-            ],
-          ),
-        ],
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "FOLLOWERS",
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontSize: 16,
+                    fontWeight: regular,
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
       );
     }
 

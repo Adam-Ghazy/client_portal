@@ -1,7 +1,8 @@
 import 'package:client_portal/pages/home/home_page.dart';
 import 'package:client_portal/pages/home/navbar_main.dart';
-import 'package:client_portal/pages/home/project_page.dart';
+import 'package:client_portal/pages/project_page.dart';
 import 'package:client_portal/pages/sign_in_page.dart';
+import 'package:client_portal/pages/tutorial_player_page.dart';
 import 'package:client_portal/provider/auth_provider.dart';
 import 'package:client_portal/widget/project_card.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
           // '/': (context) => NavbarMain(),
           '/home': (context) => NavbarMain(),
           '/project': (context) => ProjectPage(),
+          '/play': (context) => TutorialPlayerPage(),
         },
       ),
     );

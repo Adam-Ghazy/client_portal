@@ -1,3 +1,3 @@
-String baseUrl = "http://localhost:8000";
+String baseUrl = "http://project-webcare.com";
 
 String urlClientLogin = "$baseUrl/api/client/login";
