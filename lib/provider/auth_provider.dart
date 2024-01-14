@@ -1,13 +1,17 @@
 import 'package:client_portal/model/client_model.dart';
+import 'package:client_portal/model/project_model.dart';
 import 'package:client_portal/service/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider with ChangeNotifier {
   ClientModel? _client;
+  List<ProjectModel> _projects = [];
 
   ClientModel get client => _client!;
+  List<ProjectModel> get projects => _projects;
 
   set client(ClientModel client) {
+    _projects = client.projects;
     _client = client;
     notifyListeners();
   }

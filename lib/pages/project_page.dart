@@ -1,12 +1,35 @@
+import 'package:client_portal/api_address.dart';
+import 'package:client_portal/model/project_model.dart';
 import 'package:client_portal/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProjectPage extends StatelessWidget {
-  const ProjectPage({super.key});
+  final ProjectModel project;
+  const ProjectPage({super.key, required this.project});
 
   @override
   Widget build(BuildContext context) {
+    DateTime deadline = DateTime.parse(project.deadline);
+    DateTime masaAktif = DateTime.parse(project.masaAktif);
     final width = MediaQuery.of(context).size.width;
+
+    Color signColor = primaryColor;
+    String signText = "ON GOING";
+
+    switch (project.status) {
+      case "On Going":
+        break;
+      case "Completed":
+        signColor = Colors.green;
+        signText = "COMPLETED";
+
+      case "Revision":
+        signColor = Colors.orange;
+        signText = "REVISION";
+
+      default:
+    }
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -19,7 +42,7 @@ class ProjectPage extends StatelessWidget {
             color: whiteColor,
           ),
         ),
-        backgroundColor: primaryColor,
+        backgroundColor: signColor,
         title: Text(
           'Detail Project',
           style: primaryTextStyle.copyWith(
@@ -35,7 +58,15 @@ class ProjectPage extends StatelessWidget {
             Container(
               height: width / 1.5,
               width: width,
-              color: Colors.grey,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                image: DecorationImage(
+                  image: NetworkImage(
+                    "$baseUrl/storage/${project.urlPhoto}",
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             Container(
               width: width,
@@ -54,7 +85,7 @@ class ProjectPage extends StatelessWidget {
                       borderRadius: BorderRadius.all(
                         Radius.circular(20.0),
                       ),
-                      color: primaryColor,
+                      color: signColor,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -68,7 +99,7 @@ class ProjectPage extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          "ON GOING",
+                          signText,
                           style: primaryTextStyle.copyWith(
                             fontSize: 10,
                             color: whiteColor,
@@ -82,7 +113,7 @@ class ProjectPage extends StatelessWidget {
                     height: 15,
                   ),
                   Text(
-                    "Project Website Sekolah",
+                    project.name,
                     style: primaryTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: bold,
@@ -92,7 +123,7 @@ class ProjectPage extends StatelessWidget {
                     height: 3,
                   ),
                   Text(
-                    "Website Business (Pro)",
+                    project.jenis,
                     style: primaryTextStyle.copyWith(
                       fontSize: 14,
                       fontWeight: semibold,
@@ -110,7 +141,7 @@ class ProjectPage extends StatelessWidget {
                       border: Border.all(
                         width: 0.75,
                         // color: Colors.grey[900]!,
-                        color: primaryColor,
+                        color: signColor,
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -143,7 +174,9 @@ class ProjectPage extends StatelessWidget {
                                   height: 3,
                                 ),
                                 Text(
-                                  "12 / 09 / 2023",
+                                  DateFormat('dd / MM / yyyy')
+                                      .format(deadline)
+                                      .toString(),
                                   style: primaryTextStyle.copyWith(
                                     color: blackColor,
                                     fontSize: 12,
@@ -156,7 +189,7 @@ class ProjectPage extends StatelessWidget {
                           VerticalDivider(
                             width: 60,
                             thickness: 0.75,
-                            color: primaryColor,
+                            color: signColor,
                           ),
                           Expanded(
                             child: Column(
@@ -173,7 +206,9 @@ class ProjectPage extends StatelessWidget {
                                   height: 3,
                                 ),
                                 Text(
-                                  "12 / 09 / 2023",
+                                  DateFormat('dd / MM / yyyy')
+                                      .format(masaAktif)
+                                      .toString(),
                                   style: primaryTextStyle.copyWith(
                                     color: blackColor,
                                     fontSize: 12,
@@ -201,7 +236,7 @@ class ProjectPage extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    "Buat kamu yang sudah tidak sabar, Valorant Episode 8 Act 1 akan dimulai pada 9 Januari 2024 untuk zona waktu Amerika Serikat dan Eropa. Tanggal tersebut juga bertepatan dengan berakhirnya Episode 7 Act 3, sekaligus menjadi transisi dari Episode 7 ke 8.  Riot Games sendiri belum memberikan kepastian terkait jam peluncuran dari Episode 8. Sama seperti pergantian Episode atau Act sebelumnya, queue buat bermain akan dihentikan selama beberapa waktu supaya proses pergantian Episode bisa berjalan dengan lancar.n",
+                    project.keterangan,
                     textAlign: TextAlign.justify,
                     style: primaryTextStyle.copyWith(
                       fontWeight: medium,
@@ -222,7 +257,7 @@ class ProjectPage extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    "Buat kamu yang sudah tidak sabar, ",
+                    project.notes,
                     textAlign: TextAlign.justify,
                     style: primaryTextStyle.copyWith(
                       fontWeight: medium,

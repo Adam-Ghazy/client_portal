@@ -1,4 +1,4 @@
-import 'package:client_portal/pages/home/chat_page.dart';
+import 'package:client_portal/pages/home/contact_page.dart';
 import 'package:client_portal/pages/home/home_page.dart';
 import 'package:client_portal/pages/home/tutorial_page.dart';
 import 'package:client_portal/provider/auth_provider.dart';
@@ -95,7 +95,7 @@ class _NavbarMainState extends State<NavbarMain> {
           break;
         case 2:
           previousIndex = 2;
-          return ChatPage();
+          return ContactPage();
           break;
 
         default:

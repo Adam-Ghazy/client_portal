@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
         routes: {
           // '/': (context) => NavbarMain(),
           '/home': (context) => NavbarMain(),
-          '/project': (context) => ProjectPage(),
           '/play': (context) => TutorialPlayerPage(),
         },
       ),

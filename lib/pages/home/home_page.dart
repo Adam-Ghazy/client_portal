@@ -1,8 +1,13 @@
+import 'package:client_portal/api_address.dart';
+import 'package:client_portal/model/client_model.dart';
+import 'package:client_portal/model/project_model.dart';
+import 'package:client_portal/provider/auth_provider.dart';
 import 'package:client_portal/theme.dart';
 import 'package:client_portal/widget/filter_progress_card.dart';
 import 'package:client_portal/widget/project_card.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   String selectedFilter = "All";
 
   void _onCategoryCardTap(String select) {
+    print(select);
     setState(() {
       selectedFilter = select;
     });
@@ -22,6 +28,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    ClientModel client = authProvider.client;
+    List<ProjectModel> projects = authProvider.client.projects;
+
+    List<String> namaLengkap = client.name.split(" ");
+
     Widget headerProfile() {
       return Row(
         children: [
@@ -31,13 +43,13 @@ class _HomePageState extends State<HomePage> {
               Container(
                 height: 80,
                 width: 80,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(100.0),
                   ),
                   image: DecorationImage(
                     image: NetworkImage(
-                      "https://images.unsplash.com/photo-1533050487297-09b450131914?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+                      "$baseUrl/storage/${client.urlPhoto}",
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -58,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Center(
                     child: Text(
-                  "S",
+                  client.name[0],
                   style: primaryTextStyle.copyWith(
                     color: primaryColor,
                   ),
@@ -74,7 +86,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Hello, Ms Saville",
+                  "Hello, ${namaLengkap[0]}",
                   style: TextStyle(
                     color: whiteColor,
                     fontSize: 24,
@@ -107,7 +119,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "20",
+                  projects.isNotEmpty ? projects.length.toString() : "0",
                   style: TextStyle(
                     color: whiteColor,
                     fontSize: 24,
@@ -186,39 +198,8 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    Widget headerButton() {
-      return ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 20,
-          ),
-          child: Text(
-            'Your Button Text',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      );
-    }
-
-    // Widget progressClient() {
-    //   double screenWidth = MediaQuery.of(context).size.width;
-
-    // }
-
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: whiteColor,
       appBar: AppBar(
         title: Text(
           'Webcare Projects',
@@ -249,132 +230,163 @@ class _HomePageState extends State<HomePage> {
           // ),
           child: Column(
             children: [
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
+              Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 30,
                   vertical: 20,
                 ),
-                child: headerProfile(),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 30,
-                  vertical: 20,
+                height: 220,
+                color: primaryColor,
+                child: Column(
+                  children: [
+                    headerProfile(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    headerStatus(),
+                  ],
                 ),
-                child: headerStatus(),
               ),
+
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: 30,
+              //     vertical: 20,
+              //   ),
+              //   child: headerProfile(),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: 30,
+              //     vertical: 20,
+              //   ),
+              //   child: headerStatus(),
+              // ),
               Column(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: bgButtonHeader,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(10.0),
-                        topRight: Radius.circular(10.0),
+                  Stack(
+                    children: [
+                      Container(
+                        height: 20,
+                        width: double.infinity,
+                        color: primaryColor,
                       ),
-                    ),
-                    child: SingleChildScrollView(
-                      controller: ScrollController(),
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: List.generate(1, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 30,
-                              vertical: 15,
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                FilterProgressCard(
-                                  selected: selectedFilter == "All",
-                                  lable: "All (3)",
-                                  onTap: (isSelected) {
-                                    setState(() {
-                                      selectedFilter = "All";
-                                    });
-                                    _onCategoryCardTap("All");
-                                  },
+                      Container(
+                        decoration: BoxDecoration(
+                          color: bgButtonHeader,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(10.0),
+                          ),
+                        ),
+                        child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(1, (index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 30,
+                                  vertical: 15,
                                 ),
-                                FilterProgressCard(
-                                  selected: selectedFilter == "On Going",
-                                  lable: "On Going",
-                                  onTap: (isSelected) {
-                                    setState(() {
-                                      selectedFilter = "On Going";
-                                    });
-                                    _onCategoryCardTap("On Going");
-                                  },
-                                ),
-                                FilterProgressCard(
-                                  selected: selectedFilter == "Completed",
-                                  lable: "Completed",
-                                  onTap: (isSelected) {
-                                    setState(() {
-                                      selectedFilter = "Completed";
-                                    });
-                                    _onCategoryCardTap("Completed");
-                                  },
-                                ),
-                                FilterProgressCard(
-                                  selected: selectedFilter == "Revision",
-                                  lable: "Revision",
-                                  onTap: (isSelected) {
-                                    setState(() {
-                                      selectedFilter = "Revision";
-                                    });
-                                    _onCategoryCardTap("Revision");
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(10.0),
-                        topRight: Radius.circular(10.0),
-                      ),
-                    ),
-                    child: SingleChildScrollView(
-                      controller: ScrollController(),
-                      scrollDirection: Axis.vertical,
-                      child: Row(
-                        children: List.generate(1, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 15,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                            context, '/project');
+                                    FilterProgressCard(
+                                      selected: selectedFilter == "All",
+                                      lable: "All",
+                                      onTap: (isSelected) {
+                                        setState(() {
+                                          selectedFilter = "All";
+                                        });
+                                        _onCategoryCardTap("All");
                                       },
-                                      child: ProjectCard(),
                                     ),
-                                    ProjectCard(),
-                                    ProjectCard(),
+                                    FilterProgressCard(
+                                      selected: selectedFilter == "On Going",
+                                      lable: "On Going",
+                                      onTap: (isSelected) {
+                                        setState(() {
+                                          selectedFilter = "On Going";
+                                        });
+                                        _onCategoryCardTap("On Going");
+                                      },
+                                    ),
+                                    FilterProgressCard(
+                                      selected: selectedFilter == "Completed",
+                                      lable: "Completed",
+                                      onTap: (isSelected) {
+                                        setState(() {
+                                          selectedFilter = "Completed";
+                                        });
+                                        _onCategoryCardTap("Completed");
+                                      },
+                                    ),
+                                    FilterProgressCard(
+                                      selected: selectedFilter == "Revision",
+                                      lable: "Revision",
+                                      onTap: (isSelected) {
+                                        setState(() {
+                                          selectedFilter = "Revision";
+                                        });
+                                        _onCategoryCardTap("Revision");
+                                      },
+                                    ),
                                   ],
                                 ),
-                              ],
-                            ),
-                          );
-                        }),
+                              );
+                            }),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
+                  ),
+                  Stack(
+                    children: [
+                      Container(
+                        height: 20,
+                        width: double.infinity,
+                        color: bgButtonHeader,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: whiteColor,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(10.0),
+                          ),
+                        ),
+                        child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          scrollDirection: Axis.vertical,
+                          child: Row(
+                            children: List.generate(1, (index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 15,
+                                ),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ...projects
+                                          .map(
+                                            (item) =>
+                                                ProjectCard(project: item),
+                                          )
+                                          .where((item) =>
+                                              selectedFilter == "All"
+                                                  ? item.project.id > 0
+                                                  : item.project.status ==
+                                                      selectedFilter)
+                                          .toList()
+                                    ]),
+                              );
+                            }),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
