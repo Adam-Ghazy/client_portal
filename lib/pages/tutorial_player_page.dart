@@ -1,24 +1,35 @@
 // ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
 
+import 'package:client_portal/model/tutorial_model.dart';
 import 'package:client_portal/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class TutorialPlayerPage extends StatefulWidget {
-  const TutorialPlayerPage({Key? key}) : super(key: key);
+  final String videoId;
+  final TutorialModel tutorial;
+  const TutorialPlayerPage(
+      {Key? key, required this.videoId, required this.tutorial})
+      : super(key: key);
 
   @override
   State<TutorialPlayerPage> createState() => _TutorialPlayerPageState();
 }
 
 class _TutorialPlayerPageState extends State<TutorialPlayerPage> {
-  final YoutubePlayerController _controller = YoutubePlayerController(
-    initialVideoId: 'iLnmTe5Q2Qw',
-    flags: const YoutubePlayerFlags(
-      autoPlay: true,
-      mute: true,
-    ),
-  );
+  late YoutubePlayerController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = YoutubePlayerController(
+      initialVideoId: widget.videoId,
+      flags: const YoutubePlayerFlags(
+        autoPlay: true,
+        mute: true,
+      ),
+    );
+  }
+
   @override
   void dispose() {
     // Memanggil dispose pada YoutubePlayerController
@@ -57,23 +68,19 @@ class _TutorialPlayerPageState extends State<TutorialPlayerPage> {
                 ),
               ),
             ),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                player,
-                const SizedBox(
-                  height: 20,
-                ),
-                SingleChildScrollView(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ),
+            body: SingleChildScrollView(
+              controller: ScrollController(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  player,
+                  Container(
+                    margin: EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Nama New Jeans, Antara Lain",
+                          widget.tutorial.title,
                           style: primaryTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: semibold,
@@ -83,7 +90,7 @@ class _TutorialPlayerPageState extends State<TutorialPlayerPage> {
                           height: 3,
                         ),
                         Text(
-                          "Published on 23 January 2023",
+                          "Published on ${widget.tutorial.publishedAt}",
                           style: primaryTextStyle.copyWith(
                               fontSize: 12,
                               fontWeight: semibold,
@@ -104,7 +111,9 @@ class _TutorialPlayerPageState extends State<TutorialPlayerPage> {
                           height: 5,
                         ),
                         Text(
-                          "What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                          widget.tutorial.description.isEmpty
+                              ? "Tidak ada deskripsi"
+                              : widget.tutorial.description,
                           textAlign: TextAlign.justify,
                           style: primaryTextStyle.copyWith(
                             fontSize: 14,
@@ -113,8 +122,8 @@ class _TutorialPlayerPageState extends State<TutorialPlayerPage> {
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         });

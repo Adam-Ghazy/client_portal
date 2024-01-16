@@ -4,6 +4,7 @@ import 'package:client_portal/pages/project_page.dart';
 import 'package:client_portal/pages/sign_in_page.dart';
 import 'package:client_portal/pages/tutorial_player_page.dart';
 import 'package:client_portal/provider/auth_provider.dart';
+import 'package:client_portal/provider/tutorial_provider.dart';
 import 'package:client_portal/widget/project_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => AuthProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TutorialProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'client portal',
@@ -31,7 +35,6 @@ class MyApp extends StatelessWidget {
         routes: {
           // '/': (context) => NavbarMain(),
           '/home': (context) => NavbarMain(),
-          '/play': (context) => TutorialPlayerPage(),
         },
       ),
     );

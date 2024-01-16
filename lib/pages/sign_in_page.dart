@@ -1,4 +1,5 @@
 import 'package:client_portal/provider/auth_provider.dart';
+import 'package:client_portal/provider/tutorial_provider.dart';
 import 'package:client_portal/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,11 +27,12 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    TutorialProvider tutorialProvider = Provider.of<TutorialProvider>(context);
     handleSignIn() async {
       setState(() {
         isLoading = true;
       });
-
+      await tutorialProvider.getTutorials();
       if (await authProvider.login(
           username: usernameController.text,
           password: passwordController.text)) {
@@ -307,26 +309,29 @@ class _SignInPageState extends State<SignInPage> {
         margin: const EdgeInsets.symmetric(
           horizontal: 25,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const SizedBox(
-              height: 5,
-            ),
-            Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.center,
+        child: Center(
+          child: SingleChildScrollView(
+            controller: ScrollController(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                headerContent(),
                 const SizedBox(
-                  height: 33,
+                  height: 5,
                 ),
-                formSignIn(),
+                Column(
+                  children: [
+                    headerContent(),
+                    const SizedBox(
+                      height: 33,
+                    ),
+                    formSignIn(),
+                  ],
+                ),
+                forgotPassword(),
               ],
             ),
-            forgotPassword(),
-          ],
+          ),
         ),
       ),
     );
