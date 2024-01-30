@@ -208,6 +208,7 @@ class _HomePageState extends State<HomePage> {
                 height: 80,
                 width: 80,
                 decoration: BoxDecoration(
+                  color: whiteColor,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(100.0),
                   ),
@@ -257,11 +258,8 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: semibold,
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
                 Text(
-                  "Welcome to Client Portal Wbcare",
+                  "Welcome to Client Portal Webcare",
                   style: TextStyle(
                     color: whiteColor,
                     fontSize: 13,
@@ -392,28 +390,6 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: whiteColor,
-      // appBar: AppBar(
-      //   // title: Text(
-      //   //   'Webcare Projects',
-      //   //   style: blackTextStyle.copyWith(
-      //   //     fontSize: 18,
-      //   //     fontWeight: bold,
-      //   //     color: whiteColor,
-      //   //   ),
-      //   // ),
-      //   // actions: [
-      //   //   IconButton(
-      //   //     icon: Icon(
-      //   //       Icons.more_vert,
-      //   //       color: whiteColor,
-      //   //     ),
-      //   //     onPressed: () {},
-      //   //   ),
-      //   // ],
-      //   backgroundColor: primaryColor,
-      //   toolbarHeight: 60,
-      //   elevation: 0.0,
-      // ),
       body: RefreshIndicator(
         onRefresh: () {
           return Future.delayed(Duration(seconds: 1), () {
@@ -428,10 +404,9 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Container(
-            // padding: const EdgeInsets.symmetric(
-            //   horizontal: 30,
-            //   vertical: 20,
-            // ),
+            padding: const EdgeInsets.only(
+              bottom: 100,
+            ),
             child: Column(
               children: [
                 Container(
@@ -439,9 +414,9 @@ class _HomePageState extends State<HomePage> {
                     30,
                     50,
                     30,
-                    20,
+                    10,
                   ),
-                  height: 250,
+                  // height: 250,
                   color: primaryColor,
                   child: Column(
                     children: [
@@ -449,7 +424,6 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      headerStatus(),
                     ],
                   ),
                 ),
@@ -486,7 +460,9 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       FilterProgressCard(
                                         selected: selectedFilter == "All",
-                                        lable: "All",
+                                        lable: projects.isNotEmpty
+                                            ? "All (${projects.length})"
+                                            : "All (0)",
                                         onTap: (isSelected) {
                                           setState(() {
                                             selectedFilter = "All";

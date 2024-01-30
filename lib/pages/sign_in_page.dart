@@ -328,6 +328,9 @@ class _SignInPageState extends State<SignInPage> {
                     formSignIn(),
                   ],
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 forgotPassword(),
               ],
             ),

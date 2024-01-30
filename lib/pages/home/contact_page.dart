@@ -1,11 +1,24 @@
 import 'package:client_portal/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactPage extends StatelessWidget {
   const ContactPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    String contact = "6285736426304";
+    openWhatsapp() async {
+      var androidUrl =
+          "whatsapp://send?phone=$contact&text=Hi, saya butuh bantuan mengenai projek saya";
+
+      try {
+        await launchUrl(Uri.parse(androidUrl));
+      } on Exception {
+        print('Something went wrong');
+      }
+    }
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -81,7 +94,7 @@ class ContactPage extends StatelessWidget {
                   // elevation: MaterialStateProperty.all(3),
                   shadowColor: MaterialStateProperty.all(Colors.transparent),
                 ),
-                onPressed: () {},
+                onPressed: openWhatsapp,
                 child: Padding(
                   padding: const EdgeInsets.only(
                     top: 10,
@@ -116,7 +129,7 @@ class ContactPage extends StatelessWidget {
                               height: 3,
                             ),
                             Text(
-                              "+62 822-3294-9944",
+                              "+62 857-3642-6304",
                               style: whiteTextStyle.copyWith(
                                 fontSize: 16,
                                 color: whiteColor,
